@@ -1,0 +1,46 @@
+============================================================
+REQUÊTE 3 : Rebonds Golden State - Plan APRÈS optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+INDEX CRÉÉS AVANT CE TEST :
+- CREATE INDEX idx_teams_city     ON teams(city);
+- CREATE INDEX idx_games_season   ON games(season);
+- CREATE INDEX idx_gs_player_game ON game_stats(player_id, game_id);
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation                          | Name                  |
+|   0 | SELECT STATEMENT                   |                       |
+|   1 |  SORT GROUP BY                     |                       |
+|   2 |   HASH JOIN                        |                       |
+|   3 |    HASH JOIN                       |                       |
+|   4 |     HASH JOIN                      |                       |
+|*  5 |      TABLE ACCESS BY INDEX ROWID   | TEAMS                 |
+|*  6 |       INDEX RANGE SCAN             | IDX_TEAMS_CITY        |
+|       TABLE ACCESS BY INDEX ROWID   | PLAYERS               |
+|*  7 |      INDEX RANGE SCAN              | IDX_GS_PLAYER_GAME    |
+|*  8 |     TABLE ACCESS BY INDEX ROWID    | GAMES                 |
+|*  9 |      INDEX RANGE SCAN              | IDX_GAMES_SEASON      |
+
+AMÉLIORATIONS CONSTATÉES :
+- TABLE ACCESS FULL TEAMS remplacé par INDEX RANGE SCAN sur IDX_TEAMS_CITY
+- TABLE ACCESS FULL GAMES remplacé par INDEX RANGE SCAN sur IDX_GAMES_SEASON
+- INDEX composite IDX_GS_PLAYER_GAME couvre les deux jointures simultanement
+- 3 index range scans détectés dans les statistiques
+- Principe push-down predicate : Oracle filtre l'equipe ET la saison en premier
+
+STATISTIQUES CLÉS :
+- consistent gets  : 24     (était 265 → gain -91%)
+- Temps d'exécution: 0.044s (était 0.125s → gain -65%)
+- index range scans: 3      (était 0)
+- table scans      : 1      (était 15)
+
+CONCLUSION :
+Meilleure optimisation du projet : -91% de consistent gets.
+La combinaison des 3 index permet à Oracle de cibler directement
+Golden State et la saison 2023-24 avant tout traitement, réduisant
+le volume de données traité de 370 lignes à moins de 30.
+============================================================

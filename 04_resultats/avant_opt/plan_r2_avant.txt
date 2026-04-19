@@ -1,0 +1,44 @@
+============================================================
+REQUÊTE 2 : Joueurs > 2m avec interceptions - Plan AVANT optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+RÉSULTAT DE LA REQUÊTE :
+Chet Holmgren    | 85 pouces | 215.9 cm | 2 matchs avec interceptions
+Giannis Antetok. | 83 pouces | 210.8 cm | 2 matchs avec interceptions
+Nikola Jokic     | 83 pouces | 210.8 cm | 2 matchs avec interceptions
+Kevin Durant     | 82 pouces | 208.3 cm | 2 matchs avec interceptions
+Bam Adebayo      | 81 pouces | 205.7 cm | 2 matchs avec interceptions
+LeBron James     | 81 pouces | 205.7 cm | 2 matchs avec interceptions
+Jayson Tatum     | 80 pouces | 203.2 cm | 2 matchs avec interceptions
+Jimmy Butler     | 79 pouces | 200.7 cm | 2 matchs avec interceptions
+Luka Doncic      | 79 pouces | 200.7 cm | 2 matchs avec interceptions
+
+9 lignes sélectionnées.
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation              | Name       |
+|   0 | SELECT STATEMENT       |            |
+|   1 |  SORT ORDER BY         |            |
+|   2 |   HASH GROUP BY        |            |
+|   3 |    HASH JOIN           |            |
+|*  4 |     TABLE ACCESS FULL  | PLAYERS    |
+|*  5 |     TABLE ACCESS FULL  | GAME_STATS |
+
+PROBLÈME IDENTIFIÉ :
+- Ligne 4 : TABLE ACCESS FULL sur PLAYERS
+  Oracle lit toutes les lignes pour trouver height_inches >= 79
+- Ligne 5 : TABLE ACCESS FULL sur GAME_STATS
+  Oracle lit toutes les lignes pour filtrer steals > 0
+- Aucun index sur height_inches ni sur steals
+- 2 table scans (short tables) détectés dans les statistiques
+
+STATISTIQUES CLÉS :
+- consistent gets  : 14
+- Temps d'exécution: 0.057s
+- table scans      : 2
+- table scan rows  : 70
+============================================================

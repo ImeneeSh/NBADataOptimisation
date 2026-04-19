@@ -1,0 +1,38 @@
+============================================================
+REQUÊTE 4 : Maximum de points dans un match - Plan AVANT optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+RÉSULTAT DE LA REQUÊTE :
+Giannis Antetokounmpo | 31/10/2023 | 38 points
+
+1 ligne sélectionnée.
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation              | Name       |
+|   0 | SELECT STATEMENT       |            |
+|   1 |  SORT ORDER BY         |            |
+|   2 |   NESTED LOOPS         |            |
+|   3 |    NESTED LOOPS        |            |
+|*  4 |     TABLE ACCESS FULL  | GAME_STATS |  <- sous-requête MAX()
+|*  5 |     TABLE ACCESS FULL  | GAME_STATS |  <- requête principale
+|   6 |     TABLE ACCESS ROWID | PLAYERS    |
+|   7 |     TABLE ACCESS ROWID | GAMES      |
+
+PROBLÈME IDENTIFIÉ :
+- GAME_STATS est scannée en entier DEUX fois :
+    1) pour calculer MAX(points) dans la sous-requête
+    2) pour filtrer les lignes égales au max dans la requête principale
+- Aucun index sur la colonne points
+- 3 table scans (short tables) détectés dans les statistiques
+- 44 blocs lus en mémoire pour 1 ligne en résultat
+
+STATISTIQUES CLÉS :
+- consistent gets  : 44
+- Temps d'exécution: 0.093s
+- table scans      : 3
+- table scan rows  : 90
+============================================================

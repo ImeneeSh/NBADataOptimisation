@@ -1,0 +1,42 @@
+============================================================
+REQUÊTE 2 : Joueurs > 2m avec interceptions - Plan APRÈS optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+INDEX CRÉÉS AVANT CE TEST :
+- CREATE INDEX idx_players_height ON players(height_inches);
+- CREATE INDEX idx_gs_steals      ON game_stats(steals);
+- CREATE INDEX idx_gs_player_id   ON game_stats(player_id);
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation                          | Name                |
+|   0 | SELECT STATEMENT                   |                     |
+|   1 |  SORT ORDER BY                     |                     |
+|   2 |   HASH GROUP BY                    |                     |
+|   3 |    HASH JOIN                       |                     |
+|*  4 |     TABLE ACCESS BY INDEX ROWID    | PLAYERS             |
+|*  5 |      INDEX RANGE SCAN              | IDX_PLAYERS_HEIGHT  |
+|*  6 |     TABLE ACCESS BY INDEX ROWID    | GAME_STATS          |
+|*  7 |      INDEX RANGE SCAN              | IDX_GS_STEALS       |
+
+AMÉLIORATIONS CONSTATÉES :
+- TABLE ACCESS FULL PLAYERS remplacé par INDEX RANGE SCAN sur IDX_PLAYERS_HEIGHT
+- TABLE ACCESS FULL GAME_STATS remplacé par INDEX RANGE SCAN sur IDX_GS_STEALS
+- 2 index range scans détectés dans les statistiques
+- Oracle accède directement aux joueurs >= 79 pouces sans tout lire
+
+STATISTIQUES CLÉS :
+- consistent gets  : 4      (était 14 → gain -71%)
+- Temps d'exécution: 0.055s (était 0.057s)
+- index range scans: 2      (était 0)
+- table scans      : 0      (était 2)
+
+CONCLUSION :
+L'index idx_players_height est le plus impactant : Oracle filtre directement
+les joueurs de grande taille via un INDEX RANGE SCAN au lieu de parcourir
+toute la table PLAYERS. idx_gs_steals évite de même un scan complet de
+GAME_STATS pour le filtre steals > 0.
+============================================================

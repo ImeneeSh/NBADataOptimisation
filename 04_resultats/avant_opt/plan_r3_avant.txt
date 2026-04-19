@@ -1,0 +1,41 @@
+============================================================
+REQUÊTE 3 : Rebonds Golden State - Plan AVANT optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+RÉSULTAT DE LA REQUÊTE :
+Golden State Warriors | 2023-24 | Total rebonds : 24
+
+1 ligne sélectionnée.
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation              | Name       |
+|   0 | SELECT STATEMENT       |            |
+|   1 |  SORT GROUP BY         |            |
+|   2 |   HASH JOIN            |            |
+|   3 |    HASH JOIN           |            |
+|   4 |     HASH JOIN          |            |
+|*  5 |      TABLE ACCESS FULL | TEAMS      |
+|*  6 |      TABLE ACCESS FULL | PLAYERS    |
+|*  7 |     TABLE ACCESS FULL  | GAME_STATS |
+|*  8 |    TABLE ACCESS FULL   | GAMES      |
+
+PROBLÈME IDENTIFIÉ :
+- Ligne 5 : TABLE ACCESS FULL sur TEAMS
+  Oracle lit toute la table pour trouver city = 'Golden State'
+- Ligne 8 : TABLE ACCESS FULL sur GAMES
+  Oracle lit tous les matchs pour filtrer season = '2023-24'
+- Ligne 7 : TABLE ACCESS FULL sur GAME_STATS
+  Scan complet avant la jointure sur player_id / game_id
+- 15 table scans (short tables) détectés dans les statistiques
+- 265 blocs lus en mémoire pour retourner 1 seule ligne
+
+STATISTIQUES CLÉS :
+- consistent gets  : 265
+- Temps d'exécution: 0.125s
+- table scans      : 15
+- table scan rows  : 370
+============================================================

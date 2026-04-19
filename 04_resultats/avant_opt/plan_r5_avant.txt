@@ -1,0 +1,42 @@
+============================================================
+REQUÊTE 5 : Max points sur la saison - Plan AVANT optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+RÉSULTAT DE LA REQUÊTE :
+Giannis Antetokounmpo | 2023-24 | 72 points au total
+
+1 ligne sélectionnée.
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation              | Name       |
+|   0 | SELECT STATEMENT       |            |
+|   1 |  SORT ORDER BY         |            |
+|   2 |   FILTER               |            |
+|   3 |    HASH GROUP BY        |            |
+|   4 |     HASH JOIN          |            |
+|*  5 |      TABLE ACCESS FULL | GAMES      |  <- filtre saison
+|*  6 |      TABLE ACCESS FULL | GAME_STATS |  <- jointure game_id
+|   7 |     TABLE ACCESS ROWID | PLAYERS    |
+|   8 |    SORT GROUP BY        |            |  <- sous-requête MAX(SUM())
+|   9 |     HASH JOIN          |            |
+|* 10 |      TABLE ACCESS FULL | GAMES      |  <- re-scan saison
+|* 11 |      TABLE ACCESS FULL | GAME_STATS |  <- re-scan game_stats
+
+PROBLÈME IDENTIFIÉ :
+- GAMES et GAME_STATS sont scannées DEUX fois chacune :
+    1) pour la requête principale (GROUP BY + SUM)
+    2) pour la sous-requête MAX(SUM()) dans le HAVING
+- Aucun index sur season ni sur les colonnes de jointure
+- 6 table scans (short tables) dans les statistiques
+- 62 blocs lus en mémoire pour 1 seule ligne en résultat
+
+STATISTIQUES CLÉS :
+- consistent gets  : 62
+- Temps d'exécution: 0.070s
+- table scans      : 6
+- table scan rows  : 140
+============================================================

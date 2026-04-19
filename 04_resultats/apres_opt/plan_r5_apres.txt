@@ -1,0 +1,48 @@
+============================================================
+REQUÊTE 5 : Max points sur la saison - Plan APRÈS optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+INDEX CRÉÉS AVANT CE TEST :
+- CREATE INDEX idx_games_season          ON games(season);          -- réutilisé de R3
+- CREATE INDEX idx_gs_gameid_player_points ON game_stats(game_id, player_id, points);
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation                          | Name                         |
+|   0 | SELECT STATEMENT                   |                              |
+|   1 |  SORT ORDER BY                     |                              |
+|   2 |   FILTER                           |                              |
+|   3 |    HASH GROUP BY                   |                              |
+|   4 |     HASH JOIN                      |                              |
+|*  5 |      TABLE ACCESS BY INDEX ROWID   | GAMES                        |
+|*  6 |       INDEX RANGE SCAN             | IDX_GAMES_SEASON             |
+|*  7 |      INDEX RANGE SCAN              | IDX_GS_GAMEID_PLAYER_POINTS  |
+|   8 |     TABLE ACCESS BY INDEX ROWID    | PLAYERS                      |
+|   9 |    SORT GROUP BY                   |                              |  <- sous-requête
+|* 10 |     INDEX RANGE SCAN               | IDX_GAMES_SEASON             |
+|* 11 |      INDEX RANGE SCAN              | IDX_GS_GAMEID_PLAYER_POINTS  |
+
+AMÉLIORATIONS CONSTATÉES :
+- TABLE ACCESS FULL GAMES remplacé par INDEX RANGE SCAN sur IDX_GAMES_SEASON
+- TABLE ACCESS FULL GAME_STATS remplacé par INDEX RANGE SCAN sur IDX_GS_GAMEID_PLAYER_POINTS
+- L'index composite couvre game_id + player_id + points : jointure ET SUM() en un seul accès
+- La sous-requête MAX(SUM()) bénéficie des mêmes index
+- 2 index range scans détectés dans les statistiques
+- 3 table scans restants (short tables) au lieu de 6
+
+STATISTIQUES CLÉS :
+- consistent gets  : 48     (était 62 → gain -23%)
+- Temps d'exécution: 0.061s (était 0.070s → gain -13%)
+- index range scans: 2      (était 0)
+- table scans      : 3      (était 6)
+
+CONCLUSION :
+L'index composite idx_gs_gameid_player_points est un index de couverture :
+il contient toutes les colonnes nécessaires à la jointure et à l'agrégation
+SUM(points), évitant les retours en table. Le gain est plus modeste (-23%)
+car la requête implique une sous-requête imbriquée complexe avec HAVING
+qui limite l'impact des index sur le plan global.
+============================================================

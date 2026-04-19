@@ -1,0 +1,40 @@
+============================================================
+REQUÊTE 4 : Maximum de points dans un match - Plan APRÈS optimisation
+Auteur : Maouche Lina
+Date   : 19/04/2026
+============================================================
+
+INDEX CRÉÉS AVANT CE TEST :
+- CREATE INDEX idx_gs_points ON game_stats(points);
+
+PLAN D'EXÉCUTION :
+(reconstitué depuis AUTOTRACE - V$SQL_PLAN non accessible)
+
+| Id  | Operation                          | Name           |
+|   0 | SELECT STATEMENT                   |                |
+|   1 |  SORT ORDER BY                     |                |
+|   2 |   NESTED LOOPS                     |                |
+|   3 |    NESTED LOOPS                    |                |
+|*  4 |     TABLE ACCESS BY INDEX ROWID    | GAME_STATS     |
+|*  5 |      INDEX RANGE SCAN (MIN/MAX)    | IDX_GS_POINTS  |
+|   6 |     TABLE ACCESS BY INDEX ROWID    | PLAYERS        |
+|*  7 |      INDEX UNIQUE SCAN             | SYS_C008272    |
+|   8 |    TABLE ACCESS BY INDEX ROWID     | GAMES          |
+
+AMÉLIORATIONS CONSTATÉES :
+- TABLE ACCESS FULL GAME_STATS (x2) remplacé par INDEX RANGE SCAN sur IDX_GS_POINTS
+- MAX(points) résolu par lecture directe de la feuille droite du B-tree en O(log n)
+- La sous-requête n'a plus besoin de scanner toute la table
+- 2 index fetch by key détectés dans les statistiques
+
+STATISTIQUES CLÉS :
+- consistent gets  : 18     (était 44 → gain -59%)
+- Temps d'exécution: 0.032s (était 0.093s → gain -66%)
+- index fetch by key: 2     (était 0)
+- table scans      : 2      (était 3)
+
+CONCLUSION :
+L'index B-tree sur points permet à Oracle de localiser directement
+le maximum en lisant uniquement la feuille la plus à droite de l'arbre,
+sans parcourir toutes les lignes de GAME_STATS. Gain de -66% sur le temps.
+============================================================
