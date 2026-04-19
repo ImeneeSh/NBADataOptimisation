@@ -1,0 +1,32 @@
+============================================================
+REQUÊTE 1 : Triple Double - Plan AVANT optimisation
+============================================================
+
+RÉSULTAT DE LA REQUÊTE :
+Nikola Jokic | 24/10/23 | 2023-24 | 29 pts | 13 reb | 11 ast | 2 stl | 1 blk
+
+PLAN D'EXÉCUTION :
+Plan hash value: 2093995845
+
+| Id  | Operation                        | Name       |
+|   0 | SELECT STATEMENT                 |            |
+|   1 |  SORT ORDER BY                   |            |
+|   2 |   NESTED LOOPS                   |            |
+|   3 |    NESTED LOOPS                  |            |
+|   4 |     NESTED LOOPS                 |            |
+|*  5 |      TABLE ACCESS FULL           | GAME_STATS |
+|   6 |      TABLE ACCESS BY INDEX ROWID | PLAYERS    |
+|*  7 |       INDEX UNIQUE SCAN          | SYS_C008272|
+|*  8 |     INDEX UNIQUE SCAN            | SYS_C008278|
+|*  9 |    TABLE ACCESS BY INDEX ROWID   | GAMES      |
+
+PROBLÈME IDENTIFIÉ :
+- Ligne 5 : TABLE ACCESS FULL sur GAME_STATS
+  Oracle lit les 40 lignes de game_stats sans index
+- Ligne 9 : filtre season='2023-24' appliqué APRÈS le scan complet
+
+STATISTIQUES CLÉS :
+- consistent gets  : 28
+- Temps d'exécution: 1.105s
+- physical reads   : 2
+============================================================

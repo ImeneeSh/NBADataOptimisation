@@ -1,0 +1,43 @@
+============================================================
+REQUÊTE 1 : Triple Double - Plan APRÈS optimisation
+Auteur : Imene SAHI
+Date   : 19/04/2026
+============================================================
+
+INDEX CRÉÉS AVANT CE TEST :
+- CREATE INDEX idx_gs_game_id   ON game_stats(game_id);
+- CREATE INDEX idx_gs_player_id ON game_stats(player_id);
+- CREATE INDEX idx_games_season ON games(season);
+
+PLAN D'EXÉCUTION :
+Plan hash value: 2205428426
+
+| Id  | Operation                                 | Name              |
+|   0 | SELECT STATEMENT                          |                   |
+|   1 |  SORT ORDER BY                            |                   |
+|   2 |   NESTED LOOPS                            |                   |
+|   3 |    NESTED LOOPS                           |                   |
+|   4 |     MERGE JOIN                            |                   |
+|*  5 |      TABLE ACCESS BY INDEX ROWID          | GAME_STATS        |
+|   6 |       INDEX FULL SCAN                     | IDX_GS_GAME_ID    |
+|*  7 |      SORT JOIN                            |                   |
+|   8 |       TABLE ACCESS BY INDEX ROWID BATCHED | GAMES             |
+|*  9 |        INDEX RANGE SCAN                   | IDX_GAMES_SEASON  |
+|* 10 |     INDEX UNIQUE SCAN                     | SYS_C008272       |
+|  11 |    TABLE ACCESS BY INDEX ROWID            | PLAYERS           |
+
+AMÉLIORATIONS CONSTATÉES :
+- TABLE ACCESS FULL remplacé par INDEX FULL SCAN sur IDX_GS_GAME_ID
+- Filtre saison via INDEX RANGE SCAN sur IDX_GAMES_SEASON (avant le join)
+- Plus de lecture inutile de toutes les lignes
+
+STATISTIQUES CLÉS :
+- consistent gets  : 6      (était 28 → gain -78%)
+- Temps d'exécution: 0.500s (était 1.105s → gain -55%)
+- physical reads   : 0      (était 2)
+
+CONCLUSION :
+L'index idx_games_season est le plus impactant : Oracle filtre
+d'abord les matchs de la saison ciblée, puis remonte vers
+game_stats au lieu de tout scanner.
+============================================================
