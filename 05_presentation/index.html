@@ -6,14 +6,9 @@
 <title>Mini Projet NBA — Optimisation Oracle</title>
 <style>
   :root {
-    --bg: #f8f7f4;
-    --bg2: #ffffff;
-    --bg3: #f1efe8;
-    --text: #1a1a18;
-    --text2: #5a5a56;
-    --text3: #8a8a84;
-    --border: rgba(0,0,0,0.1);
-    --border2: rgba(0,0,0,0.18);
+    --bg: #f8f7f4; --bg2: #ffffff; --bg3: #f1efe8;
+    --text: #1a1a18; --text2: #5a5a56; --text3: #8a8a84;
+    --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.18);
     --purple-50: #EEEDFE; --purple-600: #534AB7; --purple-800: #3C3489;
     --teal-50: #E1F5EE;   --teal-600: #0F6E56;   --teal-800: #085041;
     --amber-50: #FAEEDA;  --amber-600: #854F0B;   --amber-800: #633806;
@@ -21,8 +16,7 @@
     --blue-50: #E6F1FB;   --blue-600: #185FA5;    --blue-800: #0C447C;
     --green-50: #EAF3DE;  --green-600: #3B6D11;   --green-800: #27500A;
     --red-50: #FCEBEB;    --red-600: #A32D2D;
-    --radius: 10px;
-    --radius-lg: 14px;
+    --radius: 10px; --radius-lg: 14px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -37,193 +31,97 @@
       --coral-800: #FAECE7; --blue-800: #E6F1FB; --green-800: #EAF3DE;
     }
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 15px;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--bg2);
-    border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem;
-    height: 56px;
-  }
-  .nav-brand {
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 600; font-size: 15px; color: var(--text);
-    text-decoration: none;
-  }
-  .nav-brand .badge {
-    background: var(--purple-50);
-    color: var(--purple-800);
-    font-size: 11px; font-weight: 500;
-    padding: 2px 8px; border-radius: 20px;
-  }
-  .nav-links { display: flex; gap: 0; }
-  .nav-links a {
-    padding: 0 1rem; height: 56px; display: flex; align-items: center;
-    text-decoration: none; color: var(--text2); font-size: 14px;
-    border-bottom: 2px solid transparent; transition: all .15s;
-  }
-  .nav-links a:hover, .nav-links a.active {
-    color: var(--text); border-bottom-color: var(--purple-600);
-  }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--bg2); border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: var(--text); text-decoration: none; }
+  .nav-brand .badge { background: var(--purple-50); color: var(--purple-800); font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .nav-links { display: flex; }
+  .nav-links a { padding: 0 1rem; height: 56px; display: flex; align-items: center; text-decoration: none; color: var(--text2); font-size: 14px; border-bottom: 2px solid transparent; transition: all .15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); border-bottom-color: var(--purple-600); }
 
-  /* ── HERO ── */
-  .hero {
-    background: var(--bg2);
-    border-bottom: 0.5px solid var(--border);
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-  }
-  .hero-tag {
-    display: inline-block;
-    background: var(--purple-50); color: var(--purple-600);
-    font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px;
-    margin-bottom: 1rem;
-  }
+  .hero { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 4rem 2rem 3rem; text-align: center; }
+  .hero-tag { display: inline-block; background: var(--purple-50); color: var(--purple-600); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; }
   .hero h1 { font-size: 2.2rem; font-weight: 600; line-height: 1.2; margin-bottom: .75rem; }
   .hero h1 span { color: var(--purple-600); }
   .hero p { color: var(--text2); font-size: 1.05rem; max-width: 560px; margin: 0 auto 2rem; }
-  .hero-meta {
-    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
-    font-size: 13px; color: var(--text3);
-  }
+  .hero-meta { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 13px; color: var(--text3); }
   .hero-meta span strong { color: var(--text2); }
 
-  /* ── MAIN LAYOUT ── */
   main { max-width: 960px; margin: 0 auto; padding: 2rem; }
   section { margin-bottom: 3rem; }
-  section h2 {
-    font-size: 1.2rem; font-weight: 600;
-    margin-bottom: 1.25rem;
-    padding-bottom: .5rem;
-    border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; gap: .5rem;
-  }
-  .section-tag {
-    font-size: 11px; font-weight: 400; color: var(--text3);
-    background: var(--bg3); padding: 2px 8px; border-radius: 4px;
-  }
+  section h2 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.25rem; padding-bottom: .5rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: .5rem; }
+  .section-tag { font-size: 11px; font-weight: 400; color: var(--text3); background: var(--bg3); padding: 2px 8px; border-radius: 4px; }
 
-  /* ── STAT CARDS ── */
-  .stats-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
-    margin-bottom: 1.5rem;
-  }
-  .stat-card {
-    background: var(--bg3); border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .stat-card { background: var(--bg3); border-radius: var(--radius); padding: 1rem 1.25rem; }
   .stat-card .label { font-size: 12px; color: var(--text3); margin-bottom: 4px; }
   .stat-card .value { font-size: 1.6rem; font-weight: 600; }
   .stat-card .sub   { font-size: 12px; color: var(--text3); margin-top: 2px; }
 
-  /* ── QUERY CARDS ── */
   .query-list { display: flex; flex-direction: column; gap: 12px; }
-  .query-card {
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  .query-header {
-    display: flex; align-items: center; gap: 12px;
-    padding: .875rem 1.25rem;
-    cursor: pointer; user-select: none;
-    transition: background .1s;
-  }
+  .query-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .query-header { display: flex; align-items: center; gap: 12px; padding: .875rem 1.25rem; cursor: pointer; user-select: none; transition: background .1s; }
   .query-header:hover { background: var(--bg3); }
-  .query-num {
-    width: 28px; height: 28px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; flex-shrink: 0;
-  }
+  .query-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
   .q1 { background: var(--purple-50); color: var(--purple-800); }
   .q2 { background: var(--teal-50);   color: var(--teal-800); }
   .q3 { background: var(--amber-50);  color: var(--amber-800); }
   .q4 { background: var(--coral-50);  color: var(--coral-800); }
   .q5 { background: var(--blue-50);   color: var(--blue-800); }
   .query-title { font-weight: 500; font-size: 14px; flex: 1; }
-  .query-badge {
-    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
-  }
+  .query-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
   .badge-optimized { background: var(--green-50); color: var(--green-800); }
   .badge-pending   { background: var(--amber-50); color: var(--amber-800); }
   .chevron { transition: transform .2s; color: var(--text3); font-size: 12px; }
   .query-card.open .chevron { transform: rotate(90deg); }
-
-  .query-body {
-    display: none; padding: 0 1.25rem 1.25rem;
-    border-top: 0.5px solid var(--border);
-  }
+  .query-body { display: none; padding: 0 1.25rem 1.25rem; border-top: 0.5px solid var(--border); }
   .query-card.open .query-body { display: block; }
-
   .query-body p { color: var(--text2); font-size: 14px; margin: .75rem 0 .5rem; }
-  pre {
-    background: var(--bg3);
-    border-radius: var(--radius);
-    padding: 1rem;
-    font-size: 12.5px;
-    overflow-x: auto;
-    line-height: 1.6;
-    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-    border: 0.5px solid var(--border);
-    white-space: pre;
-  }
+
+  pre { background: var(--bg3); border-radius: var(--radius); padding: 1rem; font-size: 12.5px; overflow-x: auto; line-height: 1.6; font-family: 'Cascadia Code','Fira Code','Consolas',monospace; border: 0.5px solid var(--border); white-space: pre; }
   .kw  { color: #534AB7; font-weight: 500; }
   .fn  { color: #0F6E56; }
   .str { color: #854F0B; }
   .cm  { color: var(--text3); font-style: italic; }
 
-  /* ── PLAN TABLE ── */
-  .plan-compare {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem;
-  }
-  .plan-box {
-    border-radius: var(--radius);
-    border: 0.5px solid var(--border);
-    overflow: hidden;
-  }
-  .plan-box-header {
-    padding: .5rem .875rem; font-size: 12px; font-weight: 500;
-  }
+  .plan-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem; }
+  .plan-box { border-radius: var(--radius); border: 0.5px solid var(--border); overflow: hidden; }
+  .plan-box-header { padding: .5rem .875rem; font-size: 12px; font-weight: 500; }
   .plan-before .plan-box-header { background: var(--red-50); color: var(--red-600); }
   .plan-after  .plan-box-header { background: var(--green-50); color: var(--green-800); }
-  .plan-box pre {
-    border-radius: 0; border: none; background: var(--bg3);
-    font-size: 11.5px; padding: .75rem;
-  }
+  .plan-box pre { border-radius: 0; border: none; background: var(--bg3); font-size: 11px; padding: .75rem; }
 
-  /* ── INDEX TABLE ── */
+  .result-box { margin-top: .75rem; background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--radius); padding: .75rem 1rem; font-size: 13px; }
+  .result-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .4rem; }
+  .result-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .result-pill { background: var(--purple-50); color: var(--purple-800); border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
+  .result-stat { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--text2); }
+  .result-stat strong { color: var(--text); }
+
+  .gain-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: .75rem; }
+  .gain-chip { display: flex; flex-direction: column; align-items: center; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: .5rem .875rem; min-width: 88px; }
+  .gain-chip .gc-label { font-size: 10px; color: var(--text3); text-align: center; }
+  .gain-chip .gc-val   { font-size: 15px; font-weight: 600; }
+  .gc-before .gc-val { color: var(--red-600); }
+  .gc-after  .gc-val { color: var(--green-600); }
+  .gc-gain   .gc-val { color: var(--purple-600); }
+
+  .pending-box { margin-top: .75rem; background: var(--amber-50); border: 0.5px solid var(--amber-600); border-radius: var(--radius); padding: .75rem 1rem; font-size: 13px; color: var(--amber-800); }
+
   .index-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 0.5px solid var(--border); }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    background: var(--bg3); text-align: left;
-    padding: .6rem 1rem; color: var(--text2); font-weight: 500;
-    border-bottom: 0.5px solid var(--border);
-  }
+  th { background: var(--bg3); text-align: left; padding: .6rem 1rem; color: var(--text2); font-weight: 500; border-bottom: 0.5px solid var(--border); }
   td { padding: .6rem 1rem; border-bottom: 0.5px solid var(--border); }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: var(--bg3); }
-  td code {
-    background: var(--bg3); padding: 1px 6px; border-radius: 4px;
-    font-family: monospace; font-size: 12px;
-    border: 0.5px solid var(--border);
-  }
+  td code { background: var(--bg3); padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; border: 0.5px solid var(--border); }
   .type-btree  { color: var(--purple-600); }
   .type-bitmap { color: var(--teal-600); }
   .type-comp   { color: var(--amber-600); }
+  .row-pending td { opacity: .5; font-style: italic; }
 
-  /* ── PERF BARS ── */
   .perf-grid { display: flex; flex-direction: column; gap: 10px; }
   .perf-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
   .perf-label { width: 180px; color: var(--text2); flex-shrink: 0; }
@@ -233,51 +131,30 @@
   .bar-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(.4,0,.2,1); }
   .bar-before { background: #E24B4A; }
   .bar-after  { background: #639922; }
-  .bar-val { font-size: 11px; color: var(--text3); min-width: 40px; text-align: right; }
-  .gain-badge {
-    font-size: 11px; font-weight: 500;
-    background: var(--green-50); color: var(--green-800);
-    padding: 1px 7px; border-radius: 4px;
-  }
+  .bar-val { font-size: 11px; color: var(--text3); min-width: 70px; text-align: right; }
+  .gain-badge { font-size: 11px; font-weight: 500; background: var(--green-50); color: var(--green-800); padding: 1px 7px; border-radius: 4px; }
+  .gain-badge-pending { font-size: 11px; font-weight: 500; background: var(--amber-50); color: var(--amber-800); padding: 1px 7px; border-radius: 4px; }
 
-  /* ── CHECKLIST ── */
   .checklist { display: flex; flex-direction: column; gap: 8px; }
-  .check-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: .75rem 1rem;
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius); font-size: 14px;
-  }
+  .check-item { display: flex; align-items: flex-start; gap: 10px; padding: .75rem 1rem; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 14px; }
   .check-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
   .check-ok   .check-icon { color: var(--green-600); }
   .check-warn .check-icon { color: var(--amber-600); }
   .check-item strong { font-weight: 500; }
   .check-item p { font-size: 13px; color: var(--text2); margin-top: 2px; }
 
-  /* ── TEAM SECTION ── */
   .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .team-card {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.25rem;
-    display: flex; gap: 1rem; align-items: flex-start;
-  }
-  .avatar {
-    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 600; font-size: 15px;
-  }
+  .team-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; }
   .av1 { background: var(--purple-50); color: var(--purple-800); }
   .av2 { background: var(--teal-50);   color: var(--teal-800); }
   .team-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
   .team-card p  { font-size: 13px; color: var(--text2); }
+  .team-badge { display: inline-block; margin-top: 6px; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+  .tb1 { background: var(--purple-50); color: var(--purple-800); }
+  .tb2 { background: var(--teal-50);   color: var(--teal-800); }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center; padding: 2rem;
-    font-size: 13px; color: var(--text3);
-    border-top: 0.5px solid var(--border);
-    margin-top: 2rem;
-  }
+  footer { text-align: center; padding: 2rem; font-size: 13px; color: var(--text3); border-top: 0.5px solid var(--border); margin-top: 2rem; }
 
   @media (max-width: 600px) {
     .plan-compare { grid-template-columns: 1fr; }
@@ -290,11 +167,9 @@
 </head>
 <body>
 
-<!-- ── NAVIGATION ── -->
 <nav>
   <a class="nav-brand" href="#">
     🏀 NBA Oracle
-    <span class="badge">ING 3 OGA</span>
   </a>
   <div class="nav-links">
     <a href="#requetes" class="active">Requêtes</a>
@@ -304,23 +179,20 @@
   </div>
 </nav>
 
-<!-- ── HERO ── -->
 <div class="hero">
   <span class="hero-tag">Mini Projet — Optimisation Oracle</span>
-  <h1>Base de données <span>NBA 2024/25</span><br>Analyse et optimisation SQL</h1>
-  <p>Analyse des plans d'exécution, création d'index B-tree et Bitmap, mesure de l'impact sur les performances.</p>
+  <h1>Base de données <span>NBA 2023/24</span><br>Analyse et optimisation SQL</h1>
+  <p>Analyse des plans d'exécution, création d'index B-tree, mesure de l'impact sur les performances.</p>
   <div class="hero-meta">
     <span><strong>Module :</strong> BDD OGA</span>
     <span><strong>Niveau :</strong> Ingénieur 3ème année</span>
     <span><strong>SGBD :</strong> Oracle XE 21c</span>
-    <span><strong>Soutenance :</strong> 03/05/2026</span>
+    <span><strong>Présentation :</strong> 03/05/2026</span>
   </div>
 </div>
 
-<!-- ── MAIN ── -->
 <main>
 
-  <!-- Stats globales -->
   <div class="stats-grid" style="margin-top:1.5rem">
     <div class="stat-card">
       <div class="label">Requêtes analysées</div>
@@ -328,72 +200,109 @@
       <div class="sub">avec EXPLAIN PLAN</div>
     </div>
     <div class="stat-card">
-      <div class="label">Index créés</div>
-      <div class="value" id="nb-index">8</div>
-      <div class="sub">B-tree + Bitmap</div>
+      <div class="label">Index créés (R1)</div>
+      <div class="value">3</div>
+      <div class="sub">B-tree — game_stats &amp; games</div>
     </div>
     <div class="stat-card">
-      <div class="label">Gain moyen</div>
-      <div class="value" id="gain-moyen">72%</div>
-      <div class="sub">réduction du coût</div>
+      <div class="label">Gain R1</div>
+      <div class="value">−78%</div>
+      <div class="sub">consistent gets : 28 → 6</div>
     </div>
     <div class="stat-card">
       <div class="label">TABLE ACCESS FULL</div>
       <div class="value">0</div>
-      <div class="sub">après optimisation</div>
+      <div class="sub">après optimisation R1</div>
     </div>
   </div>
 
-  <!-- ── SECTION REQUÊTES ── -->
   <section id="requetes">
     <h2>Requêtes SQL <span class="section-tag">5 requêtes analysées</span></h2>
-
     <div class="query-list">
 
       <!-- R1 -->
-      <div class="query-card" id="card1">
+      <div class="query-card open" id="card1">
         <div class="query-header" onclick="toggle('card1')">
           <div class="query-num q1">1</div>
-          <div class="query-title">Joueurs avec un triple double — saison 2024/25</div>
+          <div class="query-title">Joueurs ayant réalisé un triple double — saison 2023/24</div>
           <span class="query-badge badge-optimized">✓ Optimisée</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <p>Sélectionne les joueurs ayant au moins 3 catégories statistiques ≥ 10 en moyenne sur la saison.</p>
-<pre><span class="kw">SELECT</span> p.player_name, ps.season,
-       <span class="fn">ROUND</span>(<span class="fn">AVG</span>(ps.pts), 1) <span class="kw">AS</span> moy_points,
-       <span class="fn">ROUND</span>(<span class="fn">AVG</span>(ps.reb), 1) <span class="kw">AS</span> moy_rebonds,
-       <span class="fn">ROUND</span>(<span class="fn">AVG</span>(ps.ast), 1) <span class="kw">AS</span> moy_passes,
-       <span class="fn">ROUND</span>(<span class="fn">AVG</span>(ps.blk), 1) <span class="kw">AS</span> moy_contres,
-       <span class="fn">ROUND</span>(<span class="fn">AVG</span>(ps.stl), 1) <span class="kw">AS</span> moy_interceptions
-<span class="kw">FROM</span> player_stats ps
-<span class="kw">JOIN</span> players p <span class="kw">ON</span> ps.player_id = p.player_id
-<span class="kw">WHERE</span> ps.season = <span class="str">'2024-25'</span>
-<span class="kw">GROUP BY</span> p.player_name, ps.season
-<span class="kw">HAVING</span>
-  (<span class="kw">CASE WHEN</span> <span class="fn">AVG</span>(ps.pts) >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>
-  +<span class="kw">CASE WHEN</span> <span class="fn">AVG</span>(ps.reb) >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>
-  +<span class="kw">CASE WHEN</span> <span class="fn">AVG</span>(ps.ast) >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>
-  +<span class="kw">CASE WHEN</span> <span class="fn">AVG</span>(ps.blk) >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>
-  +<span class="kw">CASE WHEN</span> <span class="fn">AVG</span>(ps.stl) >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>) >= 3
-<span class="kw">ORDER BY</span> moy_points <span class="kw">DESC</span>;</pre>
+          <p>Détecte les joueurs ayant au moins 3 catégories statistiques ≥ 10 dans un même match (points, rebonds, passes, interceptions, contres).</p>
+<pre><span class="kw">SELECT</span>
+    p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
+    g.game_date                          <span class="kw">AS</span> date_match,
+    g.season                             <span class="kw">AS</span> saison,
+    gs.points                            <span class="kw">AS</span> pts,
+    gs.rebounds                          <span class="kw">AS</span> reb,
+    gs.assists                           <span class="kw">AS</span> ast,
+    gs.steals                            <span class="kw">AS</span> stl,
+    gs.blocks                            <span class="kw">AS</span> blk
+<span class="kw">FROM</span> game_stats gs
+<span class="kw">JOIN</span> players p <span class="kw">ON</span> gs.player_id = p.player_id
+<span class="kw">JOIN</span> games   g <span class="kw">ON</span> gs.game_id   = g.game_id
+<span class="kw">WHERE</span> g.season = <span class="str">'2023-24'</span>
+  <span class="kw">AND</span> (
+        (<span class="kw">CASE WHEN</span> gs.points   >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>)
+      + (<span class="kw">CASE WHEN</span> gs.rebounds >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>)
+      + (<span class="kw">CASE WHEN</span> gs.assists  >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>)
+      + (<span class="kw">CASE WHEN</span> gs.steals   >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>)
+      + (<span class="kw">CASE WHEN</span> gs.blocks   >= 10 <span class="kw">THEN</span> 1 <span class="kw">ELSE</span> 0 <span class="kw">END</span>)
+      ) >= 3
+<span class="kw">ORDER BY</span> g.game_date, joueur;</pre>
+
+          <p>Résultat obtenu</p>
+          <div class="result-box">
+            <div class="result-label">1 ligne retournée</div>
+            <div class="result-row">
+              <span class="result-pill">Nikola Jokic</span>
+              <span class="result-stat"> 24/10/2023</span>
+              <span class="result-stat"><strong>29</strong> pts</span>
+              <span class="result-stat"><strong>13</strong> reb</span>
+              <span class="result-stat"><strong>11</strong> ast</span>
+              <span class="result-stat">2 stl · 1 blk</span>
+            </div>
+          </div>
+
+          <p>Comparaison des plans d'exécution</p>
           <div class="plan-compare">
             <div class="plan-box plan-before">
-              <div class="plan-box-header">✗ Plan AVANT index (coût élevé)</div>
-              <pre>TABLE ACCESS FULL | PLAYER_STATS
-TABLE ACCESS FULL | PLAYERS
-HASH JOIN
-HASH GROUP BY
-Cost: ~450</pre>
+              <div class="plan-box-header">✗ AVANT index — consistent gets : 28 — 1.105s</div>
+              <pre>Plan hash: 2093995845
+
+|* 5 | TABLE ACCESS FULL    | GAME_STATS  |
+|  6 | TABLE ACCESS BY ROWID| PLAYERS     |
+|* 7 |  INDEX UNIQUE SCAN   | SYS_C008272 |
+|* 8 | INDEX UNIQUE SCAN    | SYS_C008278 |
+|* 9 | TABLE ACCESS BY ROWID| GAMES       |
+
+Problème : full scan GAME_STATS (40 lignes)
+Filtre season appliqué APRÈS le scan complet</pre>
             </div>
             <div class="plan-box plan-after">
-              <div class="plan-box-header">✓ Plan APRÈS index (coût réduit)</div>
-              <pre>INDEX RANGE SCAN  | IDX_PS_SEASON_PLAYER
-TABLE ACCESS BY ROWID | PLAYER_STATS
-NESTED LOOPS
-HASH GROUP BY
-Cost: ~38</pre>
+              <div class="plan-box-header">✓ APRÈS index — consistent gets : 6 — 0.500s</div>
+              <pre>Plan hash: 2205428426
+
+|  6 | INDEX FULL SCAN      | IDX_GS_GAME_ID   |
+|* 9 | INDEX RANGE SCAN     | IDX_GAMES_SEASON |
+|*10 | INDEX UNIQUE SCAN    | SYS_C008272      |
+|* 5 | TABLE ACCESS BY ROWID| GAME_STATS       |
+| 11 | TABLE ACCESS BY ROWID| PLAYERS          |
+
+IDX_GAMES_SEASON filtre la saison EN PREMIER
+→ Élimination du full scan sur GAME_STATS</pre>
             </div>
+          </div>
+
+          <p>Gains mesurés</p>
+          <div class="gain-row">
+            <div class="gain-chip gc-before"><span class="gc-label">Gets avant</span><span class="gc-val">28</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Gets après</span><span class="gc-val">6</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction gets</span><span class="gc-val">−78%</span></div>
+            <div class="gain-chip gc-before"><span class="gc-label">Temps avant</span><span class="gc-val">1.105s</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Temps après</span><span class="gc-val">0.500s</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction temps</span><span class="gc-val">−55%</span></div>
           </div>
         </div>
       </div>
@@ -402,25 +311,23 @@ Cost: ~38</pre>
       <div class="query-card" id="card2">
         <div class="query-header" onclick="toggle('card2')">
           <div class="query-num q2">2</div>
-          <div class="query-title">Joueurs &gt; 2m ayant fait des interceptions</div>
-          <span class="query-badge badge-optimized">✓ Optimisée</span>
+          <div class="query-title">Joueurs de plus de 2m ayant fait des interceptions</div>
+          <span class="query-badge badge-pending">⏳ En attente</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <p>Utilise une sous-requête EXISTS pour vérifier l'existence de matchs avec interceptions.</p>
+          <div class="pending-box">⏳ Plan d'exécution et index</div>
 <pre><span class="kw">SELECT DISTINCT</span>
-    p.player_name, p.height_cm,
-    <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> ps.game_id) <span class="kw">AS</span> nb_matchs
+    p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
+    p.height_inches                      <span class="kw">AS</span> taille_pouces,
+    <span class="fn">ROUND</span>(p.height_inches * 2.54, 1)    <span class="kw">AS</span> taille_cm,
+    <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> gs.game_id)           <span class="kw">AS</span> nb_matchs
 <span class="kw">FROM</span> players p
-<span class="kw">JOIN</span> player_stats ps <span class="kw">ON</span> p.player_id = ps.player_id
-<span class="kw">WHERE</span> p.height_cm > 200
-  <span class="kw">AND EXISTS</span> (
-      <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> player_stats ps2
-      <span class="kw">WHERE</span> ps2.player_id = p.player_id
-        <span class="kw">AND</span> ps2.stl > 0
-  )
-<span class="kw">GROUP BY</span> p.player_name, p.height_cm
-<span class="kw">ORDER BY</span> p.height_cm <span class="kw">DESC</span>;</pre>
+<span class="kw">JOIN</span> game_stats gs <span class="kw">ON</span> p.player_id = gs.player_id
+<span class="kw">WHERE</span> p.height_inches >= 79
+  <span class="kw">AND</span> gs.steals > 0
+<span class="kw">GROUP BY</span> p.first_name, p.last_name, p.height_inches
+<span class="kw">ORDER BY</span> p.height_inches <span class="kw">DESC</span>;</pre>
         </div>
       </div>
 
@@ -429,18 +336,22 @@ Cost: ~38</pre>
         <div class="query-header" onclick="toggle('card3')">
           <div class="query-num q3">3</div>
           <div class="query-title">Total des rebonds — Golden State Warriors</div>
-          <span class="query-badge badge-optimized">✓ Optimisée</span>
+          <span class="query-badge badge-pending">⏳ En attente</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <p>Jointure triple : équipes → joueurs → statistiques. Filtre sur le nom d'équipe et la saison.</p>
-<pre><span class="kw">SELECT</span> t.team_name, <span class="fn">SUM</span>(ps.reb) <span class="kw">AS</span> total_rebonds
+          <div class="pending-box">⏳ Plan d'exécution et index</div>
+<pre><span class="kw">SELECT</span>
+    t.city || <span class="str">' '</span> || t.team_name    <span class="kw">AS</span> equipe,
+    g.season                         <span class="kw">AS</span> saison,
+    <span class="fn">SUM</span>(gs.rebounds)                 <span class="kw">AS</span> total_rebonds
 <span class="kw">FROM</span> teams t
-<span class="kw">JOIN</span> players p    <span class="kw">ON</span> p.team_id   = t.team_id
-<span class="kw">JOIN</span> player_stats ps <span class="kw">ON</span> ps.player_id = p.player_id
-<span class="kw">WHERE</span> t.team_name <span class="kw">LIKE</span> <span class="str">'%Golden State%'</span>
-  <span class="kw">AND</span> ps.season = <span class="str">'2024-25'</span>
-<span class="kw">GROUP BY</span> t.team_name;</pre>
+<span class="kw">JOIN</span> players   p  <span class="kw">ON</span> p.team_id    = t.team_id
+<span class="kw">JOIN</span> game_stats gs <span class="kw">ON</span> gs.player_id = p.player_id
+<span class="kw">JOIN</span> games     g  <span class="kw">ON</span> gs.game_id   = g.game_id
+<span class="kw">WHERE</span> t.city = <span class="str">'Golden State'</span>
+  <span class="kw">AND</span> g.season = <span class="str">'2023-24'</span>
+<span class="kw">GROUP BY</span> t.city, t.team_name, g.season;</pre>
         </div>
       </div>
 
@@ -449,17 +360,20 @@ Cost: ~38</pre>
         <div class="query-header" onclick="toggle('card4')">
           <div class="query-num q4">4</div>
           <div class="query-title">Maximum de points dans un seul match</div>
-          <span class="query-badge badge-optimized">✓ Optimisée</span>
+          <span class="query-badge badge-pending">⏳ En attente</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <p>Sous-requête scalaire pour MAX — l'index B-tree sur pts permet de lire directement la feuille la plus à droite de l'arbre.</p>
-<pre><span class="kw">SELECT</span> p.player_name, g.game_date, ps.pts
-<span class="kw">FROM</span> player_stats ps
-<span class="kw">JOIN</span> players p <span class="kw">ON</span> ps.player_id = p.player_id
-<span class="kw">JOIN</span> games g   <span class="kw">ON</span> ps.game_id   = g.game_id
-<span class="kw">WHERE</span> ps.pts = (
-    <span class="kw">SELECT</span> <span class="fn">MAX</span>(pts) <span class="kw">FROM</span> player_stats
+          <div class="pending-box">⏳ Plan d'exécution et index</div>
+<pre><span class="kw">SELECT</span>
+    p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
+    g.game_date                          <span class="kw">AS</span> date_match,
+    gs.points                            <span class="kw">AS</span> points_max
+<span class="kw">FROM</span> game_stats gs
+<span class="kw">JOIN</span> players p <span class="kw">ON</span> gs.player_id = p.player_id
+<span class="kw">JOIN</span> games   g <span class="kw">ON</span> gs.game_id   = g.game_id
+<span class="kw">WHERE</span> gs.points = (
+    <span class="kw">SELECT</span> <span class="fn">MAX</span>(points) <span class="kw">FROM</span> game_stats
 )
 <span class="kw">ORDER BY</span> g.game_date;</pre>
         </div>
@@ -469,175 +383,141 @@ Cost: ~38</pre>
       <div class="query-card" id="card5">
         <div class="query-header" onclick="toggle('card5')">
           <div class="query-num q5">5</div>
-          <div class="query-title">Joueur avec le plus de points — saison 2024/25</div>
-          <span class="query-badge badge-optimized">✓ Optimisée</span>
+          <div class="query-title">Joueur avec le plus de points — saison 2023/24</div>
+          <span class="query-badge badge-pending">⏳ En attente</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <p>HAVING avec MAX imbriqué sur un GROUP BY — nécessite les index créés aux étapes précédentes.</p>
-<pre><span class="kw">SELECT</span> p.player_name, ps.season,
-       <span class="fn">SUM</span>(ps.pts) <span class="kw">AS</span> total_points
-<span class="kw">FROM</span> player_stats ps
-<span class="kw">JOIN</span> players p <span class="kw">ON</span> ps.player_id = p.player_id
-<span class="kw">WHERE</span> ps.season = <span class="str">'2024-25'</span>
-<span class="kw">GROUP BY</span> p.player_name, ps.season
-<span class="kw">HAVING</span> <span class="fn">SUM</span>(ps.pts) = (
-    <span class="kw">SELECT</span> <span class="fn">MAX</span>(<span class="fn">SUM</span>(ps2.pts))
-    <span class="kw">FROM</span> player_stats ps2
-    <span class="kw">WHERE</span> ps2.season = <span class="str">'2024-25'</span>
-    <span class="kw">GROUP BY</span> ps2.player_id
-);</pre>
+          <div class="pending-box">⏳ Plan d'exécution et index</div>
+<pre><span class="kw">SELECT</span>
+    p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
+    g.season                             <span class="kw">AS</span> saison,
+    <span class="fn">SUM</span>(gs.points)                       <span class="kw">AS</span> total_points
+<span class="kw">FROM</span> game_stats gs
+<span class="kw">JOIN</span> players p <span class="kw">ON</span> gs.player_id = p.player_id
+<span class="kw">JOIN</span> games   g <span class="kw">ON</span> gs.game_id   = g.game_id
+<span class="kw">WHERE</span> g.season = <span class="str">'2023-24'</span>
+<span class="kw">GROUP BY</span> p.first_name, p.last_name, g.season
+<span class="kw">HAVING</span> <span class="fn">SUM</span>(gs.points) = (
+    <span class="kw">SELECT</span> <span class="fn">MAX</span>(<span class="fn">SUM</span>(gs2.points))
+    <span class="kw">FROM</span> game_stats gs2
+    <span class="kw">JOIN</span> games g2 <span class="kw">ON</span> gs2.game_id = g2.game_id
+    <span class="kw">WHERE</span> g2.season = <span class="str">'2023-24'</span>
+    <span class="kw">GROUP BY</span> gs2.player_id
+)
+<span class="kw">ORDER BY</span> total_points <span class="kw">DESC</span>;</pre>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ── SECTION INDEX ── -->
+  <!-- INDEX -->
   <section id="index">
     <h2>Index créés <span class="section-tag">Justification et types</span></h2>
     <div class="index-table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Nom de l'index</th>
-            <th>Table</th>
-            <th>Colonnes</th>
-            <th>Type</th>
-            <th>Justification</th>
+            <th>Nom de l'index</th><th>Table</th><th>Colonnes</th>
+            <th>Type</th><th>Requête</th><th>Justification</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>idx_ps_season_player</code></td>
-            <td>player_stats</td>
-            <td><code>season, player_id</code></td>
-            <td><span class="type-comp">Composé B-tree</span></td>
-            <td>Filtre saison + jointure joueur en une seule passe (covering index)</td>
-          </tr>
-          <tr>
-            <td><code>idx_ps_pts</code></td>
-            <td>player_stats</td>
-            <td><code>pts</code></td>
+            <td><code>idx_games_season</code></td>
+            <td>games</td>
+            <td><code>season</code></td>
             <td><span class="type-btree">B-tree</span></td>
-            <td>MAX(pts) lit la feuille la plus à droite sans scanner la table</td>
+            <td>R1</td>
+            <td>INDEX RANGE SCAN sur la saison — filtre les matchs avant de joindre game_stats</td>
           </tr>
           <tr>
-            <td><code>idx_players_height</code></td>
-            <td>players</td>
-            <td><code>height_cm</code></td>
-            <td><span class="type-btree">B-tree</span></td>
-            <td>INDEX RANGE SCAN pour la condition height_cm &gt; 200</td>
-          </tr>
-          <tr>
-            <td><code>idx_ps_player_stl</code></td>
-            <td>player_stats</td>
-            <td><code>player_id, stl</code></td>
-            <td><span class="type-comp">Composé B-tree</span></td>
-            <td>Covering index pour la sous-requête EXISTS (pas d'accès table)</td>
-          </tr>
-          <tr>
-            <td><code>idx_teams_name</code></td>
-            <td>teams</td>
-            <td><code>team_name</code></td>
-            <td><span class="type-btree">B-tree</span></td>
-            <td>Accès rapide pour la condition LIKE '%Golden State%'</td>
-          </tr>
-          <tr>
-            <td><code>idx_players_team</code></td>
-            <td>players</td>
-            <td><code>team_id</code></td>
-            <td><span class="type-btree">B-tree</span></td>
-            <td>Optimise la jointure players → teams</td>
-          </tr>
-          <tr>
-            <td><code>idx_ps_game</code></td>
-            <td>player_stats</td>
+            <td><code>idx_gs_game_id</code></td>
+            <td>game_stats</td>
             <td><code>game_id</code></td>
             <td><span class="type-btree">B-tree</span></td>
-            <td>Jointure player_stats → games (R4)</td>
+            <td>R1</td>
+            <td>Élimine le TABLE ACCESS FULL — permet le MERGE JOIN via l'index</td>
           </tr>
           <tr>
-            <td><code>idx_bitmap_season</code></td>
-            <td>player_stats</td>
-            <td><code>season</code></td>
-            <td><span class="type-bitmap">Bitmap</span></td>
-            <td>Peu de valeurs distinctes (~5 saisons) → opérations bit à bit très rapides</td>
+            <td><code>idx_gs_player_id</code></td>
+            <td>game_stats</td>
+            <td><code>player_id</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R1</td>
+            <td>Optimise la jointure game_stats → players</td>
+          </tr>
+          <tr class="row-pending">
+            <td colspan="6">⏳ Index R2, R3, R4, R5 — à compléter</td>
           </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- ── SECTION PERFORMANCE ── -->
+  <!-- PERFORMANCE -->
   <section id="performance">
-    <h2>Comparaison des performances <span class="section-tag">Coût avant / après</span></h2>
+    <h2>Comparaison des performances <span class="section-tag">Consistent gets avant / après</span></h2>
     <p style="color:var(--text2);font-size:14px;margin-bottom:1.25rem">
-      Le coût est lu depuis la ligne <code>SELECT STATEMENT</code> dans le plan DBMS_XPLAN. Mettez à jour ces valeurs avec vos résultats réels.
+      Métrique : <code>consistent gets</code> issue de <code>SET AUTOTRACE ON</code>.
+      Plus la valeur est basse, moins Oracle lit de blocs en mémoire.
+      R2→R5 seront mis à jour.
     </p>
-    <div class="perf-grid" id="perf-container">
-      <!-- Injecté par JS -->
-    </div>
+    <div class="perf-grid" id="perf-container"></div>
   </section>
 
-  <!-- ── SECTION BILAN ── -->
+  <!-- BILAN -->
   <section id="bilan">
-    <h2>Bilan d'optimisation <span class="section-tag">Checklist</span></h2>
+    <h2>Bilan d'optimisation <span class="section-tag">R1</span></h2>
     <div class="checklist">
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>Aucun TABLE ACCESS FULL après optimisation</strong>
-          <p>Toutes les requêtes utilisent INDEX RANGE SCAN ou INDEX UNIQUE SCAN après création des index.</p>
+          <strong>TABLE ACCESS FULL éliminé sur GAME_STATS</strong>
+          <p>Oracle lisait les 40 lignes sans index. Après, il utilise IDX_GS_GAME_ID (INDEX FULL SCAN) combiné à IDX_GAMES_SEASON (INDEX RANGE SCAN) via un MERGE JOIN.</p>
         </div>
       </div>
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>Index composés = covering indexes</strong>
-          <p>Pour R1 et R2, Oracle accède uniquement aux blocs d'index, sans lire la table physique.</p>
+          <strong>Principe push-down predicate appliqué</strong>
+          <p>L'index idx_games_season force Oracle à filtrer la saison en premier, réduisant le volume de données à traiter avant la jointure.</p>
         </div>
       </div>
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>Index Bitmap sur la colonne season</strong>
-          <p>La saison a peu de valeurs distinctes (~5) : le Bitmap index est idéal pour les filtres sur cette colonne.</p>
-        </div>
-      </div>
-      <div class="check-item check-ok">
-        <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.086 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
-        <div>
-          <strong>MAX optimisé via B-tree (R4)</strong>
-          <p>Un index B-tree sur pts permet à Oracle de lire directement la feuille la plus à droite de l'arbre sans tri.</p>
+          <strong>−78% de consistent gets (28 → 6) · −55% sur le temps (1.105s → 0.500s)</strong>
+          <p>Le plan hash value a changé (2093995845 → 2205428426), confirmant qu'Oracle utilise un nouveau plan d'exécution plus efficace.</p>
         </div>
       </div>
       <div class="check-item check-warn">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zm.75 6.25a.875.875 0 110-1.75.875.875 0 010 1.75z"/></svg>
         <div>
-          <strong>Inconvénient : maintenance des index</strong>
-          <p>Chaque INSERT/UPDATE/DELETE sur player_stats doit aussi mettre à jour les 8 index créés. Pour des chargements massifs, désactiver les index temporairement est recommandé.</p>
+          <strong>Inconvénient : coût de maintenance des index</strong>
+          <p>Tout INSERT dans game_stats ou games met à jour les 3 index. Sur de petites tables l'impact est négligeable, mais sur des millions de lignes il faut désactiver les index pendant les chargements massifs.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── BINÔME ── -->
+  <!-- ÉQUIPE -->
   <section>
     <h2>Équipe projet</h2>
     <div class="team-grid">
       <div class="team-card">
-        <div class="avatar av1">B1</div>
+        <div class="avatar av1">SI</div>
         <div>
-          <h3>Binôme 1</h3>
-          <p>Requêtes 1, 2 et analyse des plans d'exécution</p>
+          <h3>Sahi Nour El Imene</h3>
+          <p>Setup Oracle · Import BD NBA · Requête 1 (triple double)</p>
         </div>
       </div>
       <div class="team-card">
-        <div class="avatar av2">B2</div>
+        <div class="avatar av2">ML</div>
         <div>
-          <h3>Binôme 2</h3>
-          <p>Requêtes 3, 4, 5 et création des index</p>
+          <h3>Maouche Lina</h3>
+          <p>Requêtes 2, 3, 4, 5 · Plans d'exécution · Index</p>
         </div>
       </div>
     </div>
@@ -646,52 +526,60 @@ Cost: ~38</pre>
 </main>
 
 <footer>
-  Mini Projet BDD OGA — ING 3 — 2025/2026 · Dr. BOUADEM Nassima · Soutenance le 03/05/2026
+  Mini Projet BDD OGA — ING 3 — 2025/2026 · Dr. BOUADEM Nassima · Présentation le 03/05/2026
+  · Sahi Nour El Imene &amp; Maouche Lina
 </footer>
 
 <script>
   function toggle(id) {
-    const card = document.getElementById(id);
-    card.classList.toggle('open');
+    document.getElementById(id).classList.toggle('open');
   }
 
-  // Données de performance — mettez à jour avec vos valeurs réelles
+  // R1 = valeurs réelles mesurées · R2-R5 = en attente
   const data = [
-    { label: 'R1 — Triple double',     before: 450, after: 38 },
-    { label: 'R2 — Joueurs > 2m',      before: 320, after: 55 },
-    { label: 'R3 — Rebonds équipe',     before: 280, after: 42 },
-    { label: 'R4 — Max pts match',      before: 190, after: 8  },
-    { label: 'R5 — Max pts saison',     before: 510, after: 45 },
+    { label: 'R1 — Triple double',  before: 28,   after: 6,    done: true  },
+    { label: 'R2 — Joueurs > 2m',   before: null, after: null, done: false },
+    { label: 'R3 — Rebonds équipe', before: null, after: null, done: false },
+    { label: 'R4 — Max pts match',  before: null, after: null, done: false },
+    { label: 'R5 — Max pts saison', before: null, after: null, done: false },
   ];
 
-  const maxVal = Math.max(...data.map(d => d.before));
+  const maxVal = 28;
   const container = document.getElementById('perf-container');
 
   data.forEach(d => {
-    const gain = Math.round((1 - d.after / d.before) * 100);
-    container.innerHTML += `
-      <div class="perf-row">
-        <div class="perf-label">${d.label}</div>
-        <div class="perf-bars">
-          <div class="bar-wrap">
-            <div class="bar-bg"><div class="bar-fill bar-before" style="width:${(d.before/maxVal*100).toFixed(0)}%"></div></div>
-            <div class="bar-val">Coût ${d.before}</div>
+    if (d.done) {
+      const gain = Math.round((1 - d.after / d.before) * 100);
+      container.innerHTML += `
+        <div class="perf-row">
+          <div class="perf-label">${d.label}</div>
+          <div class="perf-bars">
+            <div class="bar-wrap">
+              <div class="bar-bg"><div class="bar-fill bar-before" style="width:100%"></div></div>
+              <div class="bar-val">${d.before} gets</div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-bg"><div class="bar-fill bar-after" style="width:${Math.round(d.after/d.before*100)}%"></div></div>
+              <div class="bar-val">${d.after} gets</div>
+            </div>
           </div>
-          <div class="bar-wrap">
-            <div class="bar-bg"><div class="bar-fill bar-after" style="width:${(d.after/maxVal*100).toFixed(0)}%"></div></div>
-            <div class="bar-val">Coût ${d.after}</div>
+          <span class="gain-badge">−${gain}%</span>
+        </div>`;
+    } else {
+      container.innerHTML += `
+        <div class="perf-row">
+          <div class="perf-label">${d.label}</div>
+          <div class="perf-bars">
+            <div class="bar-wrap">
+              <div class="bar-bg"><div class="bar-fill bar-before" style="width:0%"></div></div>
+              <div class="bar-val" style="color:var(--text3)">—</div>
+            </div>
           </div>
-        </div>
-        <span class="gain-badge">−${gain}%</span>
-      </div>`;
+          <span class="gain-badge-pending">En attente</span>
+        </div>`;
+    }
   });
 
-  // Mettre à jour le gain moyen
-  const gains = data.map(d => Math.round((1 - d.after / d.before) * 100));
-  const moy = Math.round(gains.reduce((a,b) => a+b, 0) / gains.length);
-  document.getElementById('gain-moyen').textContent = moy + '%';
-
-  // Smooth scroll pour les liens nav
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
