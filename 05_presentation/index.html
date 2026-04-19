@@ -200,19 +200,19 @@
       <div class="sub">avec EXPLAIN PLAN</div>
     </div>
     <div class="stat-card">
-      <div class="label">Index créés (R1)</div>
-      <div class="value">3</div>
-      <div class="sub">B-tree — game_stats &amp; games</div>
+      <div class="label">Index créés (total)</div>
+      <div class="value">9</div>
+      <div class="sub">B-tree — R1 à R5</div>
     </div>
     <div class="stat-card">
-      <div class="label">Gain R1</div>
-      <div class="value">−78%</div>
-      <div class="sub">consistent gets : 28 → 6</div>
+      <div class="label">Meilleur gain</div>
+      <div class="value">−91%</div>
+      <div class="sub">consistent gets R3 : 265 → 24</div>
     </div>
     <div class="stat-card">
-      <div class="label">TABLE ACCESS FULL</div>
-      <div class="value">0</div>
-      <div class="sub">après optimisation R1</div>
+      <div class="label">Requêtes optimisées</div>
+      <div class="value">5 / 5</div>
+      <div class="sub">index range scan actif</div>
     </div>
   </div>
 
@@ -312,11 +312,11 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
         <div class="query-header" onclick="toggle('card2')">
           <div class="query-num q2">2</div>
           <div class="query-title">Joueurs de plus de 2m ayant fait des interceptions</div>
-          <span class="query-badge badge-pending">⏳ En attente</span>
+          <span class="query-badge badge-optimized">✓ Optimisée</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <div class="pending-box">⏳ Plan d'exécution et index</div>
+          <p>Retourne les joueurs de taille ≥ 79 pouces (2m) ayant réalisé au moins une interception, avec le nombre de matchs concernés.</p>
 <pre><span class="kw">SELECT DISTINCT</span>
     p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
     p.height_inches                      <span class="kw">AS</span> taille_pouces,
@@ -328,6 +328,46 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
   <span class="kw">AND</span> gs.steals > 0
 <span class="kw">GROUP BY</span> p.first_name, p.last_name, p.height_inches
 <span class="kw">ORDER BY</span> p.height_inches <span class="kw">DESC</span>;</pre>
+
+          <p>Résultat obtenu</p>
+          <div class="result-box">
+            <div class="result-label">9 lignes retournées</div>
+            <div class="result-row">
+              <span class="result-pill">Chet Holmgren</span>
+              <span class="result-stat"><strong>85</strong> pouces (215,9 cm)</span>
+              <span class="result-pill">Giannis</span>
+              <span class="result-stat"><strong>83</strong> pouces (210,8 cm)</span>
+              <span class="result-pill">Nikola Jokic</span>
+              <span class="result-stat"><strong>83</strong> pouces (210,8 cm)</span>
+              <span class="result-stat">+ 6 autres joueurs</span>
+            </div>
+          </div>
+
+          <p>Comparaison des plans d'exécution</p>
+          <div class="plan-compare">
+            <div class="plan-box plan-before">
+              <div class="plan-box-header">✗ AVANT index — consistent gets : 14 — 0.057s</div>
+              <pre>TABLE ACCESS FULL sur PLAYERS
+TABLE ACCESS FULL sur GAME_STATS
+2 table scans (short tables)
+Filtre height_inches appliqué après scan complet</pre>
+            </div>
+            <div class="plan-box plan-after">
+              <div class="plan-box-header">✓ APRÈS index — consistent gets : 4 — 0.055s</div>
+              <pre>2 index range scans actifs
+idx_players_height → filtre >= 79 direct
+idx_gs_steals → filtre steals > 0 direct
+idx_gs_player_id → jointure accélérée</pre>
+            </div>
+          </div>
+
+          <div class="gain-row">
+            <div class="gain-chip gc-before"><span class="gc-label">Gets avant</span><span class="gc-val">14</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Gets après</span><span class="gc-val">4</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction gets</span><span class="gc-val">−71%</span></div>
+            <div class="gain-chip gc-before"><span class="gc-label">Temps avant</span><span class="gc-val">0.057s</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Temps après</span><span class="gc-val">0.055s</span></div>
+          </div>
         </div>
       </div>
 
@@ -336,11 +376,11 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
         <div class="query-header" onclick="toggle('card3')">
           <div class="query-num q3">3</div>
           <div class="query-title">Total des rebonds — Golden State Warriors</div>
-          <span class="query-badge badge-pending">⏳ En attente</span>
+          <span class="query-badge badge-optimized">✓ Optimisée</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <div class="pending-box">⏳ Plan d'exécution et index</div>
+          <p>Calcule la somme des rebonds pris par tous les joueurs de Golden State sur la saison 2023-24.</p>
 <pre><span class="kw">SELECT</span>
     t.city || <span class="str">' '</span> || t.team_name    <span class="kw">AS</span> equipe,
     g.season                         <span class="kw">AS</span> saison,
@@ -352,6 +392,44 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
 <span class="kw">WHERE</span> t.city = <span class="str">'Golden State'</span>
   <span class="kw">AND</span> g.season = <span class="str">'2023-24'</span>
 <span class="kw">GROUP BY</span> t.city, t.team_name, g.season;</pre>
+
+          <p>Résultat obtenu</p>
+          <div class="result-box">
+            <div class="result-label">1 ligne retournée</div>
+            <div class="result-row">
+              <span class="result-pill">Golden State Warriors</span>
+              <span class="result-stat">Saison <strong>2023-24</strong></span>
+              <span class="result-stat">Total rebonds : <strong>24</strong></span>
+            </div>
+          </div>
+
+          <p>Comparaison des plans d'exécution</p>
+          <div class="plan-compare">
+            <div class="plan-box plan-before">
+              <div class="plan-box-header">✗ AVANT index — consistent gets : 265 — 0.125s</div>
+              <pre>15 table scans (short tables)
+TABLE ACCESS FULL sur TEAMS, GAMES, GAME_STATS
+Filtre city et season appliqués après scans complets
+265 blocs lus en mémoire</pre>
+            </div>
+            <div class="plan-box plan-after">
+              <div class="plan-box-header">✓ APRÈS index — consistent gets : 24 — 0.044s</div>
+              <pre>3 index range scans actifs
+idx_teams_city → filtre city direct
+idx_games_season → filtre saison direct
+idx_gs_player_game → jointure couverte
+−91% de blocs lus</pre>
+            </div>
+          </div>
+
+          <div class="gain-row">
+            <div class="gain-chip gc-before"><span class="gc-label">Gets avant</span><span class="gc-val">265</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Gets après</span><span class="gc-val">24</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction gets</span><span class="gc-val">−91%</span></div>
+            <div class="gain-chip gc-before"><span class="gc-label">Temps avant</span><span class="gc-val">0.125s</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Temps après</span><span class="gc-val">0.044s</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction temps</span><span class="gc-val">−65%</span></div>
+          </div>
         </div>
       </div>
 
@@ -360,11 +438,11 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
         <div class="query-header" onclick="toggle('card4')">
           <div class="query-num q4">4</div>
           <div class="query-title">Maximum de points dans un seul match</div>
-          <span class="query-badge badge-pending">⏳ En attente</span>
+          <span class="query-badge badge-optimized">✓ Optimisée</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <div class="pending-box">⏳ Plan d'exécution et index</div>
+          <p>Trouve le joueur ayant marqué le plus de points dans un seul match, toutes saisons confondues.</p>
 <pre><span class="kw">SELECT</span>
     p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
     g.game_date                          <span class="kw">AS</span> date_match,
@@ -376,6 +454,43 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
     <span class="kw">SELECT</span> <span class="fn">MAX</span>(points) <span class="kw">FROM</span> game_stats
 )
 <span class="kw">ORDER BY</span> g.game_date;</pre>
+
+          <p>Résultat obtenu</p>
+          <div class="result-box">
+            <div class="result-label">1 ligne retournée</div>
+            <div class="result-row">
+              <span class="result-pill">Giannis Antetokounmpo</span>
+              <span class="result-stat">31/10/2023</span>
+              <span class="result-stat"><strong>38</strong> points</span>
+            </div>
+          </div>
+
+          <p>Comparaison des plans d'exécution</p>
+          <div class="plan-compare">
+            <div class="plan-box plan-before">
+              <div class="plan-box-header">✗ AVANT index — consistent gets : 44 — 0.093s</div>
+              <pre>TABLE ACCESS FULL sur GAME_STATS (x2)
+Sous-requête MAX(points) scan complet
+3 table scans (short tables)
+44 blocs lus en mémoire</pre>
+            </div>
+            <div class="plan-box plan-after">
+              <div class="plan-box-header">✓ APRÈS index — consistent gets : 18 — 0.032s</div>
+              <pre>idx_gs_points → MAX() par lecture feuille B-tree
+INDEX FETCH BY KEY pour la valeur max
+Sous-requête résolue sans scan complet
+−59% de blocs lus</pre>
+            </div>
+          </div>
+
+          <div class="gain-row">
+            <div class="gain-chip gc-before"><span class="gc-label">Gets avant</span><span class="gc-val">44</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Gets après</span><span class="gc-val">18</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction gets</span><span class="gc-val">−59%</span></div>
+            <div class="gain-chip gc-before"><span class="gc-label">Temps avant</span><span class="gc-val">0.093s</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Temps après</span><span class="gc-val">0.032s</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction temps</span><span class="gc-val">−66%</span></div>
+          </div>
         </div>
       </div>
 
@@ -384,11 +499,11 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
         <div class="query-header" onclick="toggle('card5')">
           <div class="query-num q5">5</div>
           <div class="query-title">Joueur avec le plus de points — saison 2023/24</div>
-          <span class="query-badge badge-pending">⏳ En attente</span>
+          <span class="query-badge badge-optimized">✓ Optimisée</span>
           <span class="chevron">▶</span>
         </div>
         <div class="query-body">
-          <div class="pending-box">⏳ Plan d'exécution et index</div>
+          <p>Trouve le joueur ayant cumulé le plus grand nombre de points sur l'ensemble de la saison 2023-24.</p>
 <pre><span class="kw">SELECT</span>
     p.first_name || <span class="str">' '</span> || p.last_name  <span class="kw">AS</span> joueur,
     g.season                             <span class="kw">AS</span> saison,
@@ -406,6 +521,44 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
     <span class="kw">GROUP BY</span> gs2.player_id
 )
 <span class="kw">ORDER BY</span> total_points <span class="kw">DESC</span>;</pre>
+
+          <p>Résultat obtenu</p>
+          <div class="result-box">
+            <div class="result-label">1 ligne retournée</div>
+            <div class="result-row">
+              <span class="result-pill">Giannis Antetokounmpo</span>
+              <span class="result-stat">Saison <strong>2023-24</strong></span>
+              <span class="result-stat">Total : <strong>72 pts</strong></span>
+            </div>
+          </div>
+
+          <p>Comparaison des plans d'exécution</p>
+          <div class="plan-compare">
+            <div class="plan-box plan-before">
+              <div class="plan-box-header">✗ AVANT index — consistent gets : 62 — 0.070s</div>
+              <pre>6 table scans (short tables)
+Sous-requête MAX(SUM()) sans index
+TABLE ACCESS FULL sur GAME_STATS (x2)
+62 blocs lus en mémoire</pre>
+            </div>
+            <div class="plan-box plan-after">
+              <div class="plan-box-header">✓ APRÈS index — consistent gets : 48 — 0.061s</div>
+              <pre>2 index range scans actifs
+idx_games_season → filtre saison direct
+idx_gs_gameid_player_points → couvre JOIN + SUM
+INDEX FETCH BY KEY pour la sous-requête
+−23% de blocs lus</pre>
+            </div>
+          </div>
+
+          <div class="gain-row">
+            <div class="gain-chip gc-before"><span class="gc-label">Gets avant</span><span class="gc-val">62</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Gets après</span><span class="gc-val">48</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction gets</span><span class="gc-val">−23%</span></div>
+            <div class="gain-chip gc-before"><span class="gc-label">Temps avant</span><span class="gc-val">0.070s</span></div>
+            <div class="gain-chip gc-after"><span class="gc-label">Temps après</span><span class="gc-val">0.061s</span></div>
+            <div class="gain-chip gc-gain"><span class="gc-label">Réduction temps</span><span class="gc-val">−13%</span></div>
+          </div>
         </div>
       </div>
 
@@ -448,8 +601,61 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
             <td>R1</td>
             <td>Optimise la jointure game_stats → players</td>
           </tr>
-          <tr class="row-pending">
-            <td colspan="6">⏳ Index R2, R3, R4, R5 — à compléter</td>
+          <tr>
+            <td><code>idx_players_height</code></td>
+            <td>players</td>
+            <td><code>height_inches</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R2</td>
+            <td>INDEX RANGE SCAN sur height ≥ 79 — évite TABLE ACCESS FULL sur PLAYERS</td>
+          </tr>
+          <tr>
+            <td><code>idx_gs_steals</code></td>
+            <td>game_stats</td>
+            <td><code>steals</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R2</td>
+            <td>Filtre steals &gt; 0 sans scan complet de GAME_STATS</td>
+          </tr>
+          <tr>
+            <td><code>idx_teams_city</code></td>
+            <td>teams</td>
+            <td><code>city</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R3</td>
+            <td>Accès direct à 'Golden State' sans parcourir toute la table TEAMS</td>
+          </tr>
+          <tr>
+            <td><code>idx_games_season</code></td>
+            <td>games</td>
+            <td><code>season</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R3, R5</td>
+            <td>Filtre saison '2023-24' en amont — réutilisé par R5</td>
+          </tr>
+          <tr>
+            <td><code>idx_gs_player_game</code></td>
+            <td>game_stats</td>
+            <td><code>player_id, game_id</code></td>
+            <td><span class="type-comp">Composite</span></td>
+            <td>R3</td>
+            <td>Couvre les deux jointures player et game simultanément</td>
+          </tr>
+          <tr>
+            <td><code>idx_gs_points</code></td>
+            <td>game_stats</td>
+            <td><code>points</code></td>
+            <td><span class="type-btree">B-tree</span></td>
+            <td>R4</td>
+            <td>MAX(points) résolu par lecture de la feuille droite du B-tree en O(log n)</td>
+          </tr>
+          <tr>
+            <td><code>idx_gs_gameid_player_points</code></td>
+            <td>game_stats</td>
+            <td><code>game_id, player_id, points</code></td>
+            <td><span class="type-comp">Composite</span></td>
+            <td>R5</td>
+            <td>Couvre jointure + GROUP BY + SUM(points) — index de couverture</td>
           </tr>
         </tbody>
       </table>
@@ -462,41 +668,54 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
     <p style="color:var(--text2);font-size:14px;margin-bottom:1.25rem">
       Métrique : <code>consistent gets</code> issue de <code>SET AUTOTRACE ON</code>.
       Plus la valeur est basse, moins Oracle lit de blocs en mémoire.
-      R2→R5 seront mis à jour.
     </p>
     <div class="perf-grid" id="perf-container"></div>
   </section>
 
   <!-- BILAN -->
   <section id="bilan">
-    <h2>Bilan d'optimisation <span class="section-tag">R1</span></h2>
+    <h2>Bilan d'optimisation <span class="section-tag">R1 → R5</span></h2>
     <div class="checklist">
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>TABLE ACCESS FULL éliminé sur GAME_STATS</strong>
+          <strong>TABLE ACCESS FULL éliminé sur GAME_STATS (R1)</strong>
           <p>Oracle lisait les 40 lignes sans index. Après, il utilise IDX_GS_GAME_ID (INDEX FULL SCAN) combiné à IDX_GAMES_SEASON (INDEX RANGE SCAN) via un MERGE JOIN.</p>
         </div>
       </div>
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>Principe push-down predicate appliqué</strong>
-          <p>L'index idx_games_season force Oracle à filtrer la saison en premier, réduisant le volume de données à traiter avant la jointure.</p>
+          <strong>R2 — −71% consistent gets (14 → 4) grâce aux index sur height et steals</strong>
+          <p>Les filtres height_inches ≥ 79 et steals &gt; 0 utilisent désormais des INDEX RANGE SCAN au lieu de TABLE ACCESS FULL.</p>
         </div>
       </div>
       <div class="check-item check-ok">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
         <div>
-          <strong>−78% de consistent gets (28 → 6) · −55% sur le temps (1.105s → 0.500s)</strong>
-          <p>Le plan hash value a changé (2093995845 → 2205428426), confirmant qu'Oracle utilise un nouveau plan d'exécution plus efficace.</p>
+          <strong>R3 — Meilleur résultat : −91% consistent gets (265 → 24) · −65% temps</strong>
+          <p>La combinaison idx_teams_city + idx_games_season + idx_gs_player_game couvre les 4 tables de la jointure. Oracle filtre Golden State et la saison en premier, réduisant massivement le volume traité.</p>
+        </div>
+      </div>
+      <div class="check-item check-ok">
+        <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
+        <div>
+          <strong>R4 — −59% consistent gets (44 → 18) · −66% temps grâce à idx_gs_points</strong>
+          <p>Le MAX(points) est résolu par lecture directe de la feuille droite du B-tree en O(log n) au lieu d'un scan complet de la table.</p>
+        </div>
+      </div>
+      <div class="check-item check-ok">
+        <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.207 5.293a1 1 0 010 1.414l-3.5 3.5a1 1 0 01-1.414 0l-1.5-1.5a1 1 0 011.414-1.414L7 9.086l2.793-2.793a1 1 0 011.414 0z"/></svg>
+        <div>
+          <strong>R5 — −23% consistent gets (62 → 48) grâce à l'index composite de couverture</strong>
+          <p>L'index idx_gs_gameid_player_points couvre la jointure, le GROUP BY et le SUM(points) en un seul accès. La sous-requête MAX(SUM()) bénéficie aussi de idx_games_season.</p>
         </div>
       </div>
       <div class="check-item check-warn">
         <svg class="check-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zm.75 6.25a.875.875 0 110-1.75.875.875 0 010 1.75z"/></svg>
         <div>
-          <strong>Inconvénient : coût de maintenance des index</strong>
-          <p>Tout INSERT dans game_stats ou games met à jour les 3 index. Sur de petites tables l'impact est négligeable, mais sur des millions de lignes il faut désactiver les index pendant les chargements massifs.</p>
+          <strong>Inconvénient : coût de maintenance des 9 index créés</strong>
+          <p>Tout INSERT dans game_stats, games, players ou teams met à jour les index correspondants. Sur de petites tables l'impact est négligeable, mais sur des millions de lignes il faut désactiver les index pendant les chargements massifs (ALTER INDEX ... UNUSABLE).</p>
         </div>
       </div>
     </div>
@@ -537,14 +756,14 @@ IDX_GAMES_SEASON filtre la saison EN PREMIER
 
   // R1 = valeurs réelles mesurées · R2-R5 = en attente
   const data = [
-    { label: 'R1 — Triple double',  before: 28,   after: 6,    done: true  },
-    { label: 'R2 — Joueurs > 2m',   before: null, after: null, done: false },
-    { label: 'R3 — Rebonds équipe', before: null, after: null, done: false },
-    { label: 'R4 — Max pts match',  before: null, after: null, done: false },
-    { label: 'R5 — Max pts saison', before: null, after: null, done: false },
+    { label: 'R1 — Triple double',  before: 28,  after: 6,  done: true },
+    { label: 'R2 — Joueurs > 2m',   before: 14,  after: 4,  done: true },
+    { label: 'R3 — Rebonds équipe', before: 265, after: 24, done: true },
+    { label: 'R4 — Max pts match',  before: 44,  after: 18, done: true },
+    { label: 'R5 — Max pts saison', before: 62,  after: 48, done: true },
   ];
 
-  const maxVal = 28;
+  const maxVal = 265;
   const container = document.getElementById('perf-container');
 
   data.forEach(d => {
