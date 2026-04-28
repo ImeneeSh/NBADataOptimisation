@@ -38,7 +38,7 @@ Pour chaque requête, on a suivi cette démarche :
 
 Un récapitulatif visuel du projet est disponible sur **GitHub Pages** :
 
-🔗 **[https://imeneesh.github.io/NBADataOptimisation/](https://imeneesh.github.io/NBADataOptimisation/)**
+🔗 **[https://imeneesh.github.io/NBADataOptimisation/](https://nbadataoptimisation.netlify.app/)**
 
 Cette page présente pour chaque requête :
 - Le code SQL
@@ -127,4 +127,4 @@ Tables principales utilisées :
 
 ##  Date de présentation
 
-**03 mai 2026** — Centre de calcul, Salle 204
+**03 mai 2026** 
