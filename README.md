@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Objectif du projet
+##  Objectif du projet
 
 L'objectif est d'**optimiser des requêtes SQL** portant sur une base de données NBA, en mesurant l'impact concret des index B-tree sur les performances.
 
@@ -19,7 +19,7 @@ Pour chaque requête, on a suivi cette démarche :
 
 ---
 
-## 📊 Récapitulatif des résultats
+##  Récapitulatif des résultats
 
 | Requête | Description | Gets avant | Gets après | Gain |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@ Pour chaque requête, on a suivi cette démarche :
 
 ---
 
-## 🌐 Présentation interactive
+##  Présentation interactive
 
 Un récapitulatif visuel du projet est disponible sur **GitHub Pages** :
 
@@ -49,7 +49,7 @@ Cette page présente pour chaque requête :
 
 ---
 
-## 🗂️ Structure du projet
+##  Structure du projet
 
 ```
 NBADataOptimisation/
@@ -84,7 +84,7 @@ NBADataOptimisation/
 
 ---
 
-## 🛠️ Outils utilisés
+##  Outils utilisés
 
 | Outil | Usage |
 |---|---|
@@ -96,7 +96,7 @@ NBADataOptimisation/
 
 ---
 
-## 🗃️ Base de données
+##  Base de données
 
 Source : [https://github.com/Jyyoungg/nba-sql-database](https://github.com/Jyyoungg/nba-sql-database)
 
@@ -111,11 +111,11 @@ Tables principales utilisées :
 
 ---
 
-## 👩‍💻 Répartition des tâches
+##  Répartition des tâches
 
 | Tâche | Maouche Lina | Sahi Nour El Imene |
 |---|---|---|
-| Setup BDD (tables + données) | ✅ (clone) | ✅ (création) |
+| Setup BDD (tables + données) | ✅(clone) | ✅ (création) |
 | R1 — Triple double | — | ✅ |
 | R2 — Joueurs > 2m | ✅ | — |
 | R3 — Rebonds équipe | ✅ | — |
@@ -125,6 +125,6 @@ Tables principales utilisées :
 
 ---
 
-## 📅 Date de présentation
+##  Date de présentation
 
 **03 mai 2026** — Centre de calcul, Salle 204
