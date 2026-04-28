@@ -111,20 +111,6 @@ Tables principales utilisées :
 
 ---
 
-##  Répartition des tâches
-
-| Tâche | Maouche Lina | Sahi Nour El Imene |
-|---|---|---|
-| Setup BDD (tables + données) | ✅(clone) | ✅ (création) |
-| R1 — Triple double | — | ✅ |
-| R2 — Joueurs > 2m | ✅ | — |
-| R3 — Rebonds équipe | ✅ | — |
-| R4 — Max points match | ✅ | — |
-| R5 — Max points saison | ✅ | — |
-| Présentation index.html | ✅ (résultats R2→R5) | ✅ (résultats R1) |
-
----
-
 ##  Date de présentation
 
 **03 mai 2026** 
