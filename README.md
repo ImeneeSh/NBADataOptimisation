@@ -92,7 +92,7 @@ NBADataOptimisation/
 | **SQL Developer** | Exécution des requêtes et analyse des plans |
 | **EXPLAIN PLAN / AUTOTRACE** | Analyse des plans d'exécution Oracle |
 | **Git + GitHub** | Versionnement et collaboration |
-| **GitHub Pages** | Hébergement de la présentation HTML |
+| **Netfly** | Hébergement de la présentation HTML |
 
 ---
 
