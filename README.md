@@ -59,18 +59,18 @@ NBADataOptimisation/
 │   └── 02_insert_data.sql         # Insertion des données
 │
 ├── 02_requetes/
-│   ├── requete1_triple_double.sql  # R1 — Imene
-│   ├── requete2_grands_joueurs.sql # R2 — Lina
-│   ├── requete3_rebonds_equipe.sql # R3 — Lina
-│   ├── requete4_max_points_match.sql # R4 — Lina
-│   └── requete5_max_points_saison.sql # R5 — Lina
+│   ├── requete1_triple_double.sql  # R1 
+│   ├── requete2_grands_joueurs.sql # R2 
+│   ├── requete3_rebonds_equipe.sql # R3 
+│   ├── requete4_max_points_match.sql # R4 
+│   └── requete5_max_points_saison.sql # R5 
 │
 ├── 03_optimisation/
-│   ├── index_r1.sql               # Index B-tree pour R1 — Imene
-│   ├── index_r2.sql               # Index B-tree pour R2 — Lina
-│   ├── index_r3.sql               # Index B-tree pour R3 — Lina
-│   ├── index_r4.sql               # Index B-tree pour R4 — Lina
-│   └── index_r5.sql               # Index B-tree pour R5 — Lina
+│   ├── index_r1.sql               # Index B-tree pour R1
+│   ├── index_r2.sql               # Index B-tree pour R2 
+│   ├── index_r3.sql               # Index B-tree pour R3 
+│   ├── index_r4.sql               # Index B-tree pour R4 
+│   └── index_r5.sql               # Index B-tree pour R5 
 │
 ├── 04_resultats/
 │   ├── avant_opt/                 # Plans d'exécution AVANT index (R1→R5)
@@ -79,7 +79,7 @@ NBADataOptimisation/
 ├── 05_presentation/
 │   └── index.html                 # Dashboard interactif (GitHub Pages)
 │
-└── README.md                      # Ce fichier
+└── README.md                     
 ```
 
 ---
